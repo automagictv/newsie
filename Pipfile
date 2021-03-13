@@ -9,6 +9,7 @@ newsapi-python = "*"
 pytest = "*"
 pytz = "*"
 python-dateutil = "*"
+pytest-mock = "*"
 
 [dev-packages]
 
