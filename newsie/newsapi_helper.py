@@ -1,3 +1,5 @@
+import logging
+
 from newsapi import NewsApiClient
 
 from newsie import config
@@ -21,7 +23,8 @@ class NewsApiHelper(object):
         Returns:
             Top headlines.
         """
-        return self.client.get_top_headlines(
+        logging.info(f"Retrieveing top headlines for {query}...")
+        articles = self.client.get_top_headlines(
             q=query.query,
             language=query.language,
             country=query.country,
@@ -29,3 +32,5 @@ class NewsApiHelper(object):
             sources=",".join(query.sources) if query.sources else None,
             page_size=100
         )
+        logging.info(f"Retrieved {len(articles['articles'])} articles")
+        return articles
