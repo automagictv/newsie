@@ -9,11 +9,7 @@ class NewsApiHelper(object):
 
     def __init__(self, api_key=config.NEWS_API_KEY):
         """Constructor for our API interface."""
-        self.api_key = api_key
-        self.client = self._get_client()
-
-    def _get_client(self):
-        return NewsApiClient(api_key=self.api_key)
+        self.client = NewsApiClient(api_key=api_key)
 
     def get_top_headlines(self, query):
         """Returns the top headlines.
