@@ -5,6 +5,15 @@ from newsie.newsapi_helper import NewsApiHelper
 from newsie.slack import SlackFacade
 
 
+# Set up logging.
+logging.basicConfig(
+    filename=config.LOGFILE,
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+
 def main(news_api_helper):
 
     sf = SlackFacade()

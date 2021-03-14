@@ -65,6 +65,8 @@ class SlackFacade(object):
     def send_messages(self, name, articles, channel=None, n=8):
         """Sends messages after chunking data to comply with slack limits.
 
+        Should chunk data, create rich message layouts, and send the message.
+
         Args:
             name: string, name of this search.
             articles: An iterable of newsapi article responses.

@@ -41,3 +41,10 @@ class QueryHelper(object):
         self.sources = sources
         self.language = language
         self.slack_channel = slack_channel
+
+    def __str__(self):
+        return (
+            f"QueryHelper(name={self.name}, query={self.query}, category={self.category}, "
+            f"country={self.country}, sources={self.sources}, language={self.language}, "
+            f"channel={self.slack_channel})"
+        )
