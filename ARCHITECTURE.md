@@ -7,21 +7,32 @@
  * Should provide functionality to post separate categories to separate channels.
  * Each Slack post should include the article, publication, description and a link to the article.
 
-# Happy Path
-
- 1. Call some config file to get a set of queries we want to use for our article search.
- 2. Iterate over categories / queries and call the news api for each to get top results.
- 3. Format Slack messages according to our preferred Rich Message Layout.
- 4. Send Slack messages to the specified channel.
- 5. Exit.
-
 # Design
 
- * News API Interface
+ * News Helper Interface
+    * Connects to a news API
+    * Queries top headlines based on config
  * Slack API Interface
+    * Connects to the API
+    * Structures data in desired message format
+    * Sends messages to a specified channel
  * Query object
+    * Encapsulate all query logic and performs data checks if needed
+    * Map a query to a channel
+    * Map a query to the name of our result set
  * Config
+    * House all constants / settings
+    * Contain an iterable of query objects
  * Runner
+    * Use the objects to implement the behavior we want and execute the program
+
+# Happy Path
+
+ 1. Use config file to get a set of queries we want to use for our article search.
+ 2. Iterate over categories / queries and call a news api for each to get top results.
+ 3. Format Slack messages according to preferred style/layout.
+ 4. Send Slack messages to the specified channel.
+ 5. Exit.
 
 # Expansion Ideas
 

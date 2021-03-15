@@ -14,9 +14,7 @@ logging.basicConfig(
 )
 
 
-def main(news_api_helper):
-
-    sf = SlackFacade()
+def main(news_api_helper, slack_helper):
 
     for query in config.QUERIES:
         # get results
@@ -25,7 +23,7 @@ def main(news_api_helper):
         articles = result["articles"]
 
         # send to slack
-        sf.send_messages(
+        slack_helper.send_messages(
             query.name,
             articles,
             query.slack_channel
@@ -33,4 +31,4 @@ def main(news_api_helper):
 
 
 if __name__ == "__main__":
-    main(NewsApiHelper())
+    main(NewsApiHelper(), SlackFacade())

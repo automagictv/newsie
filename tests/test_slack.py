@@ -67,10 +67,7 @@ class TestSlack:
         """Tests that an article block is returned as expected."""
         utc_dt = datetime.datetime(2021, 3, 1, 1, 1, 1).replace(
             tzinfo=pytz.utc)
-
-        tzone = pytz.timezone(config.TIMEZONE)
-        tz_dt = utc_dt.replace(tzinfo=pytz.utc).astimezone(tzone)
-        expected_dt = tzone.normalize(tz_dt).strftime("%Y-%m-%d %H:%M:%S")
+        expected_dt = "2021-02-28 20:01:01"
         expected = {
             "type": "section",
             "text": {

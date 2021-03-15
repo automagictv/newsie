@@ -25,16 +25,9 @@ class SlackFacade(object):
         self.bot_name = bot_name
 
         # Internally set properites
-        self.client = self._get_slack_client()
+        self.client = WebClient(token=self.token)
         self.icon_emoji = ":newspaper:"
         self.slack_message_entries = {}
-
-    def _get_slack_client(self):
-        """Gets a slack client authorized using the provided token.
-        
-        Returns a `SlackClient` object.
-        """
-        return WebClient(token=self.token)
 
     def emit(self, blocks, channel):
         """Sends a message to your channel.
@@ -61,6 +54,27 @@ class SlackFacade(object):
             raise e
 
         return response
+
+    def _chunk_message_data(self, articles, n=8):
+        """Prepares the data objects for use by x.
+
+        Args:
+            session: An initialized SQLAlchemy session.
+            articles: An iterable of newsapi article responses.
+            n: The size of our final chunks. This is needed to break up
+                our messages to avoid slacks block limits (50):
+                https://api.slack.com/reference/block-kit/blocks
+        Returns:
+            A list of chunked articles.
+        """
+        logging.info("Preparing slack message data...")
+        # Chunk data
+        logging.info("Chunking data...")
+        final_message_keys = [
+            articles[i:i + n] for i in range(0, len(articles), n)
+        ]
+
+        return final_message_keys
 
     def send_messages(self, name, articles, channel=None, n=8):
         """Sends messages after chunking data to comply with slack limits.
@@ -90,28 +104,6 @@ class SlackFacade(object):
                 message = self.create_rich_message_layout(name, articles, cont=True)
             slack_response = self.emit(message, channel)
             logging.info(f"Sent message {ind+1}/{message_count} to Slack:\n{slack_response}")
-
-
-    def _chunk_message_data(self, articles, n=8):
-        """Prepares the data objects for use by x.
-
-        Args:
-            session: An initialized SQLAlchemy session.
-            articles: An iterable of newsapi article responses.
-            n: The size of our final chunks. This is needed to break up
-                our messages to avoid slacks block limits (50):
-                https://api.slack.com/reference/block-kit/blocks
-        Returns:
-            A list of chunked articles.
-        """
-        logging.info("Preparing slack message data...")
-        # Chunk data
-        logging.info("Chunking data...")
-        final_message_keys = [
-            articles[i:i + n] for i in range(0, len(articles), n)
-        ]
-
-        return final_message_keys
 
     def format_divider_block(self):
         """Returns a divider block."""
@@ -172,7 +164,8 @@ class SlackFacade(object):
         """
         tzone = pytz.timezone(config.TIMEZONE)
         tz_dt = publish_dt.replace(tzinfo=pytz.utc).astimezone(tzone)
-        dt_string = tzone.normalize(tz_dt).strftime("%Y-%m-%d %H:%M:%S")
+        dt_string = tz_dt.strftime("%Y-%m-%d %H:%M:%S")
+        # dt_string = tzone.normalize(tz_dt).strftime("%Y-%m-%d %H:%M:%S")
         return {
             "type": "section",
             "text": {
