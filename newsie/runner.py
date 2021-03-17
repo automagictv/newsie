@@ -20,7 +20,7 @@ def main(news_api_helper, slack_helper):
         # get results
         result = news_api_helper.get_top_headlines(query)
         logging.info(f"Retrieved {result['totalResults']} results.")
-        articles = result["articles"]
+        articles = result["articles"][:query.article_limit]
 
         # send to slack
         slack_helper.send_messages(

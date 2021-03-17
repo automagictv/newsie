@@ -15,6 +15,12 @@ SLACK_BOT_TEXT = (
     "click on the button.\n\n*I hope you read something interesting!*\n"
 )
 
+PLACEHOLDER_IMAGE = (
+    "https://images.unsplash.com/photo-1615801627253-eae9c5be334e?ixid="
+    "MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto"
+    "=format&fit=crop&w=3150&q=8"
+)
+
 
 class SlackFacade(object):
 
@@ -164,6 +170,7 @@ class SlackFacade(object):
         """
         tzone = pytz.timezone(config.TIMEZONE)
         tz_dt = publish_dt.replace(tzinfo=pytz.utc).astimezone(tzone)
+        image_url = PLACEHOLDER_IMAGE if not image_url else image_url
         dt_string = tz_dt.strftime("%Y-%m-%d %H:%M:%S")
         # dt_string = tzone.normalize(tz_dt).strftime("%Y-%m-%d %H:%M:%S")
         return {

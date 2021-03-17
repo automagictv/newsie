@@ -5,7 +5,8 @@ ERROR_TEXT = "Sources can not be set if country or category is set."
 class QueryHelper(object):
 
     def __init__(self, name, query=None, category=None, country=None, 
-                 sources=None, language=None, slack_channel=None):
+                 sources=None, language=None, slack_channel=None,
+                 article_limit=16):
         """Constructs the query helper object.
 
         Args:
@@ -28,6 +29,7 @@ class QueryHelper(object):
                 you want to get headlines for. Defaults to "en".
             slack_channel: string, the #channel name where these results will be
                 published.
+            article_limit: int, the limit for the number of articles sent to slack.
         Raises:
             ValueError if sources is set with country or category.
         """
@@ -41,6 +43,7 @@ class QueryHelper(object):
         self.sources = sources
         self.language = language
         self.slack_channel = slack_channel
+        self.article_limit = article_limit
 
     def __str__(self):
         return (
