@@ -1,6 +1,6 @@
 # newsie
 
-Daily collections of articles straight to Slack (**tutorial video [here]()**).
+Daily collections of articles straight to Slack (**tutorial video [here](https://youtu.be/tMkuLiCmGzw)**).
 
 ## Initial Setup
 This uses `pipenv` to manage the virtual env and all dependencies. If you don't have pipenv install it [here](https://pypi.org/project/pipenv/) then:
