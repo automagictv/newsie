@@ -13,6 +13,15 @@ pipenv install --ignore-pipfile
 
 To run:
 
+You'll need to set a few environment variables first. The required ones are as follows:
+
+```
+export NEWS_API_KEY="YourKeyHere"
+export SLACK_BOT_TOKEN="YourTokenHere"
+```
+
+Then run:
+
 ```
 pipenv run python newsie/runner.py
 ```
